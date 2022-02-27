@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block css %}
+    <style>
+        .list-group {
+            margin-bottom: 0
+        }
+
+        .panel {
+            margin-bottom: 0
+        }
+
+    .sidebar{
+        will-change: min-height;
+    }
+
+    .sidebar__inner{
+        transform: translate(0,0);
+        transform: translate3d(0, 0, 0);
+        will-change: position, transform;
+    }
+
+    </style>
+
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">精彩文章</li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">文章分享</h3>
+                    </div>
+                    {% for article in articles %}
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <div class="tags">
+                                    {% if article.column %}
+                                        <span style="margin-right: 10px" type="button"
+                                              class="label
+                        {% if article.column.title == '增肌' %}
+                            label-success
+                        {% elif article.column.title == '减脂' %}
+                            label-danger
+                        {% elif article.column.title == '康复' %}
+                            label-warning
+                         {% else %}
+                            label-info
+
+                        {% endif %}
+                    ">
+                    {{ article.column }}
+                                        </span>
+                                        <span>
+                    {% for tag in article.tags.all %}
+                        <a href="#"
+                           class="badge badge-secondary"
+                        >
+                            {{ tag }}
+                        </a>
+                    {% endfor %}
+                </span>
+                                    {% endif %}
+                                </div>
+                                <span style="font-size: 24px;font-weight: bold" class="panel-title"><a
+                                        href="{% url 'article_detail' article.id %}">{{ article.title }} </a></span>
+                            </div>
+                            <div class="panel-body">
+                                <p style="color: grey">{{ article.body|slice:'50' }}...</p>
+                            </div>
+                            <div class="panel-footer">
+                                <p>
+                                    <span class="glyphicon glyphicon-eye-open">
+                                    </span>
+                                    {{ article.total_views }}&nbsp;&nbsp;&nbsp;
+
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    {{ article.created|date:'Y-m-d' }}&nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-comments-o" aria-hidden="true"></i> {{ article.comments.count }}
+
+
+                                </p>
+                            </div>
+                        </div>
+
+
+
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="col-sm-3 sidebar" id="sidebar" >
+                <div class="list-group sidebar__inner">
+                    <li  class="list-group-item  list-group-item-danger">火热文章</li>
+                    {% for hot_item in hot_article %}
+                        <a href="{% url 'article_detail' hot_item.id %}" class="list-group-item">
+                            {{ hot_item.title|slice:'10' }}
+                            <span class="badge">{{ hot_item.total_views }}</span></a>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="container" style="margin-bottom: 30px">
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
+
+
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
+    <script type="text/javascript">
+    $('#sidebar').stickySidebar({
+        topSpacing: 20,
+        bottomSpacing: 20,
+
+
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block breadcrumb %}
+    <li class="active">团队介绍</li>
+
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/ImagePreview/css/base.css' %}">
+    <style>
+        #coach_li {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #coach_li > li {
+            display: flex;
+            width: 33%;
+            height: 500px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container marketing">
+
+        <!-- Three columns of text below the carousel -->
+        <ul id="coach_li">
+            {% for coach in coaches %}
+                <li>
+                    <div class="col-lg-10">
+                        {% if coach.avatar %}
+                            <img class="img-circle"
+                                 src="{{ coach.avatar.url }}"
+                                 alt="Generic placeholder image" width="140" height="140">
+                        {% else %}
+                            <img class="img-circle"
+                                 src="/media/avatar/defaut_avatar.jpeg"
+                                 alt="Generic placeholder image" width="140" height="140">
+                        {% endif %}
+                        <h2>{{ coach.name }}</h2>
+                        <p>{{ coach.bio }}</p>
+                        <p>
+                        <ul style="list-style-type: circle;padding-left: 10px">
+                            {% for award in coach.award.all %}
+                                <li><a target="view_window" href="{{ award.img_file.url }}" class="content__text-link" data-fx="1" data-img="{{ award.img_file.url }}">{{ award.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+
+                        </p>
+
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+
+
+    <script>document.documentElement.className = "js";
+    var supportsCssVars = function () {
+        var e, t = document.createElement("style");
+        return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e
+    };
+    supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+
+{% endblock %}
+
+{% block js %}
+
+
+    <script src="{% static 'plugins/ImagePreview/js/charming.min.js' %}"></script>
+    <script src="{% static 'plugins/ImagePreview/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'plugins/ImagePreview/js/TweenMax.min.js' %}"></script>
+    <script src="{% static 'plugins/ImagePreview/js/demo.js' %}"></script>
+
+{% endblock %}

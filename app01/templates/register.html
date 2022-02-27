@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/acount_form.css' %}">
+</head>
+<body>
+<div class="account">
+    <h2>用户注册</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% for filed in form %}
+            <div class="form-group">
+                <label>{{ filed.label }}</label>
+                {{ filed }}
+                <span class="error_msg" style="color: red;">{{ filed.errors.0 }}</span>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <label for="id_code">短信验证码</label>
+            <div class="row">
+                <div class="col-xs-7">
+                    <input type="text" name="code" class="form-control" placeholder="请输入短信验证码" required="" id="id_code">
+                    <span class="error-msg"></span>
+                </div>
+                <div class="col-xs-5">
+                    <input id="smsBtn" type="button" class="btn btn-default" value="点击获取验证码">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <input id="submit" type="submit" class="btn btn-primary" value="注  册">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

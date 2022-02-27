@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block breadcrumb %}
+    <li class="active">课程中心</li>
+
+
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">所有课程</h3>
+                    </div>
+                    <div class="panel">
+                        <ul class="media-list">
+                            {% for course in courses %}
+                            <li class="media" style="border-bottom: 1px dotted #bbb8b8;">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="img-thumbnail media-object" style="width:200px;height: 150px;"
+                                             src="{{ course.img_file.url }}" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="panel" style="margin-bottom: 0">
+                                        <div class="panel-heading" style="font-weight: bolder;font-size: larger">{{ course.title }}</div>
+                                        <div style="color: grey" class="panel-body" >{{course.body|slice:15}}...
+                                            <i style="color: #f15d5d;;float: right" class="fa fa-3x fa-rmb"> {{ course.price }}</i>
+                                        </div>
+                                        <div style="background-color: #faf6f6" class="panel-footer">
+                                            <i class="fa fa-user"> {{ course.coach }} </i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <i class="fa fa-calendar-check-o"> {{ course.period }}个课时 </i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <i class="fa fa-clock-o"> {{ course.get_day_no_display }}{{ course.get_time_display }}</i>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            <a href="{% url 'course_detail' course.id %}" style="float: right" type="button" class="btn btn-primary">更多
+                                            </a>
+
+
+                                        </div>
+                                    </div>
+
+                                    {#                                    <h4 class=" media-heading">减脂训练营</h4>#}
+                                    {#                                    <p>课程简介课程简介课程简介课程简介课程课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介课程简介简介课程简介课程简介课程简介</p>#}
+                                    {#                                    <p>课时</p>#}
+                                    {#                                    <button type="button" class="btn btn-primary">Default</button>#}
+
+
+                                </div>
+
+
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

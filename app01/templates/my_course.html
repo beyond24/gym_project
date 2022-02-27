@@ -1,0 +1,164 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block css %}
+
+    <style>
+        #coursesTable {
+            padding: 15px 10px;
+        }
+
+        .Courses-head {
+            background-color: #edffff;
+        }
+
+        .Courses-head > div {
+            text-align: center;
+            font-size: 14px;
+            line-height: 28px;
+        }
+
+        .left-hand-TextDom, .Courses-head {
+            background-color: #f2f6f7;
+        }
+
+        .Courses-leftHand {
+            background-color: #f2f6f7;
+            font-size: 12px;
+
+        }
+
+        .Courses-leftHand .left-hand-index {
+            color: #9c9c9c;
+            margin-bottom: 4px !important;
+        }
+
+        .Courses-leftHand .left-hand-name {
+            color: #666;
+
+        }
+
+        .Courses-leftHand p {
+            text-align: center;
+            font-weight: 900;
+        }
+
+        .Courses-head > div {
+            border-left: none !important;
+        }
+
+        .Courses-leftHand > div {
+            padding-top: 5px;
+            border-bottom: 1px dashed rgb(219, 219, 219);
+        }
+
+        .Courses-leftHand > div:last-child {
+            border-bottom: none !important;
+        }
+
+        .left-hand-TextDom, .Courses-head {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .Courses-content > ul {
+            border-bottom: 1px dashed rgb(219, 219, 219);
+            box-sizing: border-box;
+        }
+
+        .Courses-content > ul:last-child {
+            border-bottom: none !important;
+        }
+
+        .highlight-week {
+            color: #02a9f5 !important;
+        }
+
+        .Courses-content li {
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+            line-height: 50px;
+        }
+
+        .Courses-content li span {
+            padding: 6px 2px;
+            box-sizing: border-box;
+            line-height: 18px;
+            border-radius: 4px;
+            white-space: normal;
+            word-break: break-all;
+            cursor: pointer;
+        }
+
+        .grid-active {
+            z-index: 9999;
+        }
+
+        .grid-active span {
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active" >我的课表</li>
+{% endblock %}
+{% block content %}
+
+
+
+
+
+    <div class="container">
+        <div id="coursesTable" courseList='{{ course_list }}'></div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/timetables.min.js' %}"></script>
+    <script>
+        var courseList = eval($('#coursesTable').attr('courseList'))
+        console.log(courseList)
+        {#    [#}
+        {#    ['增肌课', '', '', '', '减脂课', '', '', '',],#}
+        {#    ['', '', '', '', '', '', '', '',],#}
+        {#    ['', '康复课', '', '', '', '', '', 'HITI燃脂',],#}
+        {#    ['单车课', '', '', '', '燃脂操', '', '', '',],#}
+        {##}
+        {#];#}
+        var week = window.innerWidth > 360 ? ['周一', '周二', '周三', '周四', '周五', '周六', '周日'] :
+            ['一', '二', '三', '四', '五', '六', '日'];
+        var day = new Date().getDay();
+        var courseType = [
+            [{index: '1', name: '9:00-10:00'}, 1],
+            [{index: '2', name: '10:00-11:00'}, 1],
+            [{index: '3', name: '11:00-12:00'}, 1],
+            [{index: '4', name: '14:00-15:00'}, 1],
+            [{index: '5', name: '15:00-16:00'}, 1],
+            [{index: '6', name: '16:00-17:00'}, 1],
+            [{index: '7', name: '17:00-18:00'}, 1],
+            [{index: '8', name: '19:00-20:00'}, 1],
+
+        ];
+        // 实例化(初始化课表)
+        var Timetable = new Timetables({
+            el: '#coursesTable',
+            timetables: courseList,
+            week: week,
+            timetableType: courseType,
+            {#highlightWeek: day,#}
+            gridOnClick: function (e) {
+                alert(e.name + '  ' + e.week + ', 第' + e.index + '节课, 课长' + e.length + '节');
+                console.log(e);
+            },
+            styles: {
+                Gheight: 80,
+                leftHandWidth: 70,
+                palette: ['#898ec4', '#d4e38b']
+            }
+        });
+
+
+    </script>
+{% endblock %}

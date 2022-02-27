@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/acount_form.css' %}">
+
+</head>
+<body>
+<div class="account">
+    <h2>用户登录</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            <label>用户名</label>
+            {{ form.username }}
+            <span class="error_msg" style="color: red;">{{ form.username.errors.0 }}</span>
+        </div>
+        <div class="form-group">
+            <label>密码</label>
+            {{ form.password }}
+            <span class="error_msg" style="color: red;">{{ form.password.errors.0 }}</span>
+        </div>
+        <div class="form-group">
+            <label for="id_code">图片验证码</label>
+            <div class="row">
+                <div class="col-xs-7">
+                    {#                    <input type="text" name="code" class="form-control" placeholder="验证码">#}
+                    {{ form.code }}
+                    <span class="error_msg" style="color: red;">{{ form.code.errors.0 }}</span>
+                </div>
+                <div class="col-xs-5">
+                    <img id="image_code" src="/image/code/" style="width: 120px;">
+                </div>
+            </div>
+        </div>
+        <div class="checkbox">
+            <div class="right"><a href="/forget/">忘记密码？</a></div>
+        </div>
+        <input type="submit" value="登 录" class="btn btn-primary">
+        <a href="/register/">
+            <button type="button" class="btn btn-default">注 册</button>
+        </a>
+    </form>
+</div>
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        // 页面框架加载完成之后代码自动执行
+        changeCode();
+        clearErrors();
+    })
+
+    function changeCode() {
+        $("#image_code").click(function () {
+            // 向浏览器告知src有变
+            $(this)[0].src += '?';
+
+
+        })
+    }
+
+    function clearErrors() {
+        {#$(".error_msg").empty()#}
+    }
+
+</script>
+
+
+</body>
+</html>

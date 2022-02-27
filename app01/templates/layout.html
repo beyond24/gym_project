@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    {% block css %}{% endblock %}
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">GYM_WEB</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/index/">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页
+                </a></li>
+                <li>
+                    <a href="/course/list/">
+                        <span class="glyphicon glyphicon-book" aria-hidden="true">
+                    </span>
+                        课程中心
+                    </a>
+                </li>
+                <li>
+                    <a href="/article/list/">
+                    <span class="glyphicon glyphicon-bookmark" aria-hidden="true">
+                    </span>
+                        精彩文章
+                    </a>
+                </li>
+                <li>
+                    <a href="/coach/list/">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    </span>
+                        团队展示
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.info %}
+                    {#                    有session展示下拉栏，否则显示登录按钮#}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            {{ request.session.info.username }}({{ request.session.info.level }})
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人资料</a></li>
+                            <li><a href="/mycourse/{{ request.session.info.id }}">我的课表</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout/">注销</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <a href="/login/">
+                        <button id="btnLogin" type="button" class="btn btn-default navbar-btn">登 录</button>
+                    </a>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container ">
+    <ol class="breadcrumb">
+        <li><a href="/index/">首页</a></li>
+        {% block breadcrumb %}{% endblock %}
+    </ol>
+</div>
+
+
+<div>
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.js' %}"></script>
+
+<footer class="navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <p class="m-0 text-center text-black">Copyright &copy; xxxxxxxxxxx 2022</p>
+    </div>
+</footer>
+{% block js %}{% endblock %}
+</body>
+</html>
