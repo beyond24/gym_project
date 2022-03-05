@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
-
+{% load my_filters_and_tags %}
 {% block css %}
     <style>
         .list-group {
@@ -82,7 +82,7 @@
                                     {{ article.total_views }}&nbsp;&nbsp;&nbsp;
 
                                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                    {{ article.created|date:'Y-m-d' }}&nbsp;&nbsp;&nbsp;
+                                    {{ article.created|timesince_zh }}&nbsp;&nbsp;&nbsp;
                                     <i class="fa fa-comments-o" aria-hidden="true"></i> {{ article.comments.count }}
 
 

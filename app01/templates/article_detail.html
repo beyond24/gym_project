@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-
+{% load my_filters_and_tags %}
 
 {% block breadcrumb %}
     <li><a href="/article/list">精彩文章</a></li>
@@ -75,7 +75,7 @@
                     {{ comment.user }}
                 </strong> 于
                 <span style="color: #2885ea">
-                    {{ comment.created|date:"Y-m-d H:i:s" }}
+                    {{ comment.created|timesince_zh }}
                 </span> 时说：
             </p>
             <pre style="font-family: inherit; font-size: 1em;">{{ comment.body|safe }}</pre>

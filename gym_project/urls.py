@@ -22,6 +22,7 @@ from django.conf import settings
 from app01.views import index, acount, count, article, coach, course
 
 urlpatterns = [
+    path('', course.course_list,name='home'),
 
     # 后台的控制台count
     path('dashboard/', count.dashboard, name='dashboard'),
