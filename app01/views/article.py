@@ -8,6 +8,13 @@ from app01.utils.bootstrap import BootstrapModelForm
 
 def article_list(request):
     articles = ArticlePost.objects.all()
+    column = request.GET.get('column')
+    tag = request.GET.get('tag')
+    if column is not None and column.isdigit():
+        articles = articles.filter(column=column)
+    if tag and tag != 'None':
+        articles = articles.filter(tags__name__in=[tag])
+
     page_object = Pagination(request, articles, page_size=5, )
 
     hot_article = ArticlePost.objects.all().order_by('-total_views').values('id','title', 'total_views')[:10]

@@ -43,24 +43,24 @@
                             <div class="panel-heading">
                                 <div class="tags">
                                     {% if article.column %}
-                                        <span style="margin-right: 10px" type="button"
-                                              class="label
+                                        <a href="{% url 'article_list' %}?column={{ article.column.id }}"  style="margin-right: 10px" type="button"
+                                              class="btn
                         {% if article.column.title == '增肌' %}
-                            label-success
+                            btn-success
                         {% elif article.column.title == '减脂' %}
-                            label-danger
+                            btn-danger
                         {% elif article.column.title == '康复' %}
-                            label-warning
+                            btn-warning
                          {% else %}
-                            label-info
+                            btn-info
 
                         {% endif %}
                     ">
                     {{ article.column }}
-                                        </span>
+                                        </a>
                                         <span>
                     {% for tag in article.tags.all %}
-                        <a href="#"
+                        <a href="{% url 'article_list' %}?tag={{ tag }}"
                            class="badge badge-secondary"
                         >
                             {{ tag }}

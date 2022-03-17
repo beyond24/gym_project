@@ -40,7 +40,7 @@ urlpatterns = [
     path('logout/', acount.logout),
 
     # article
-    path('article/list/', article.article_list),
+    path('article/list/', article.article_list, name='article_list'),
     path('article-detail/<int:nid>/', article.article_detail, name='article_detail'),
     # 发表评论
     path('post-comment/<int:article_id>/', article.post_comment, name='post_comment'),

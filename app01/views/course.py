@@ -3,20 +3,25 @@ from django.shortcuts import render
 
 from app01 import models
 from app01.models import Course
+from app01.utils.pagination import Pagination
 from django.db.models import Q
 
 def course_list(request):
-    courses = Course.objects.all()
-    content = {
-        'courses': courses,
+    queryset = Course.objects.all()
+    page_obj = Pagination(request,queryset,page_size=4)
+    context = {
+        'courses': page_obj.page_queryset,
+        'page_string':page_obj.html(),
     }
-    return render(request, 'course_list.html', content)
+    return render(request, 'course_list.html', context)
 
 
 def course_detail(request, nid):
     course = Course.objects.filter(id=nid).first()
+    user_obj = models.User.objects.filter(id=request.session['info']['id']).first()
     content = {
         'course': course,
+        'user_obj':user_obj,
     }
     return render(request, 'course_detail.html', content)
 
@@ -37,5 +42,6 @@ def buy_course(request):
         return JsonResponse({'status': False, 'errors': '余额不足！'})
     else:
         user_obj.acount -= course_obj.price
+        user_obj.course_set.add(course_obj)
         user_obj.save()
-        return JsonResponse({'status': True})
+        return JsonResponse({'status': True, 'acount':user_obj.acount.to_eng_string()})

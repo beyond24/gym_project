@@ -62,6 +62,7 @@ def login(request):
         request.session['info'] = {
             'status': True,
             'id': user_obj.id,
+            # 'acount':user_obj.acount.to_eng_string(),
             'username': user_obj.username,
             'level': user_obj.get_level_display(),
         }
@@ -69,7 +70,7 @@ def login(request):
         # 设置用户的session时间
         request.session.set_expiry(60 * 60 * 24 * 7)
 
-        return redirect('/index/')
+        return redirect('home')
     # 数据校验失败重新输入
     return render(request, 'login.html', {'form': form})
 
